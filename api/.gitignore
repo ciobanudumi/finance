@@ -11,9 +11,7 @@
 swagger_docs.json
 
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
+
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -26,7 +24,6 @@ swagger_docs.json
 ###< friendsofphp/php-cs-fixer ###
 
 ###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
 ###> squizlabs/php_codesniffer ###
