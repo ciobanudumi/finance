@@ -1,0 +1,30 @@
+App\Entity\TaskPatchMigrate:
+  attributes:
+    registrationDate:
+      groups: [ 'task-patch-migrate' ]
+    rfTasksetId:
+      groups: [ 'task-patch-migrate' ]
+    pop:
+      groups: [ 'task-patch-migrate' ]
+    row:
+      groups: [ 'task-patch-migrate' ]
+    frame:
+      groups: [ 'task-patch-migrate' ]
+    block:
+      groups: [ 'task-patch-migrate' ]
+    trayFiber:
+      groups: [ 'task-patch-migrate' ]
+    positionFiber:
+      groups: [ 'task-patch-migrate' ]
+    portingId:
+      groups: [ 'task-patch-migrate' ]
+    equipment:
+      groups: [ 'task-patch-migrate' ]
+    activePort:
+      groups: [ 'task-patch-migrate' ]
+    positionEquipment:
+      groups: [ 'task-patch-migrate' ]
+    patchcordLength:
+      groups: [ 'task-patch-migrate' ]
+    patchcordThickness:
+      groups: [ 'task-patch-migrate' ]

@@ -1,0 +1,30 @@
+api_platform:
+    title: Finance API
+    show_webby: false
+    version: 1.0.0
+    # Good cache defaults for REST APIs
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        extra_properties:
+            standard_put: true
+        pagination_enabled: true
+        pagination_client_items_per_page: true
+    mapping:
+        paths:
+            - '%kernel.project_dir%/config/api_platform'
+    graphql:
+        graphql_playground:
+            enabled: false
+    swagger:
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
+    collection:
+        order: 'ASC'
+        order_parameter_name: 'order'
+        pagination:
+            page_parameter_name: page
+            items_per_page_parameter_name: itemsPerPage

@@ -1,0 +1,14 @@
+parameters:
+    level: 7
+    paths: ['../src']
+    excludePaths:
+        - ../migrations/*
+        - ../wsdl/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#contravariant with parameter#'
+        - '#Variable method call on Psr\\Log\\LoggerInterface#'
+        - '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read.#'
+

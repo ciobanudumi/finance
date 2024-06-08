@@ -1,0 +1,70 @@
+@import 'finance_variables';
+
+p {
+  margin-bottom: 0.75rem;
+}
+
+.login-logo{
+  background: $finance-grey ;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.card-accent-primary, .c-dark-theme .card-accent-primary{
+  border-top-color: $finance-yellow !important;
+}
+.btn-primary{
+  background-color: $finance-dark-green;
+}
+
+.btn-link {
+  color: $finance-light-green;
+}
+
+.breadcrumb-item.active {
+  color: $finance-dark-green;
+}
+
+.c-dark-theme .c-sidebar .c-sidebar-nav-link:hover, .c-dark-theme .c-sidebar .c-sidebar-nav-dropdown-toggle:hover{
+  background: $finance-dark-green;
+}
+
+.selected-customer-nav{
+  background-color:#24a54c !important;
+}
+
+.table-header-custom {
+  color:$finance-green;
+}
+
+.toast-header{
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.react-datepicker__close-icon::after {
+  background-color: $secondary;
+  outline: none;
+}
+
+@media only screen and (max-width: 576px){
+  .create-account-section {
+    width: 100%
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .create-account-section {
+    width: 44%
+  }
+}
+
+.required:after {
+  content: ' *';
+  color: red;
+}
+
+.single-row {
+  white-space: nowrap;
+}

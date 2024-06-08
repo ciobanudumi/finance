@@ -1,0 +1,26 @@
+@import './_variables.scss';
+@import "~@coreui/coreui-pro/scss/coreui.scss";
+
+$react-select-neutral-0-dark:       #2F303A;
+$react-select-neutral-80-dark:      #474850;
+$react-select-neutral-10-dark:      $finance-yellow;
+$react-select-neutral-50-dark:      rgba(255, 255, 255, 0.08);
+$react-select-neutral-60-dark:      #2F303A;
+$react-select-neutral-20-dark:      #303338;
+$react-select-neutral-30-dark:      #1F2023;
+$react-select-primary-25-dark:      #3A3C40;
+$react-select-danger-light-dark:    #CCA905;
+$react-select-danger-dark:          #fff;
+
+:export {
+    reactSelectNeutral0Dark:        $react-select-neutral-0-dark;
+    reactSelectNeutral10Dark:       $react-select-neutral-10-dark;
+    reactSelectNeutral80Dark:       $react-select-neutral-80-dark;
+    reactSelectNeutral50Dark:       $react-select-neutral-50-dark;
+    reactSelectNeutral60Dark:       $react-select-neutral-60-dark;
+    reactSelectNeutral20Dark:       $react-select-neutral-20-dark;
+    reactSelectNeutral30Dark:       $react-select-neutral-30-dark;
+    reactSelectPrimary25Dark:       $react-select-primary-25-dark;
+    reactSelectDangerLightDark:     $react-select-danger-light-dark;
+    reactSelectDangerDark:          $react-select-danger-dark;
+}

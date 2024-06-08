@@ -1,0 +1,27 @@
+/* e-mail bugfixes */
+.ExternalClass * {line-height: 100%}
+sup, sub {vertical-align: baseline; position: relative; top: -0.4em}
+sub {top: 0.4em}
+a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important}
+
+/* General classes */
+body {width: 100% !important; Margin: 0; padding: 0; -webkit-text-size-adjust:none; -ms-text-size-adjust:100%}
+img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border: none}
+.bodytemplate, td { font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif; font-size: 14px; color: #3a3f43}
+.bodytemplate a, .bodytemplate a:hover { color: #e33027; text-decoration: underline}
+
+/* Custom styles */
+h1 { font-size: 20px; }
+p { font-size: 12px; }
+h1, h2, h3, h4, p {  font-family: Calibri, Helvetica, Arial, sans-serif; color: #000; }
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (max-width:650px) {
+    object, embed, iframe { width: 100% !important; height: auto !important}
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important}
+    .mHide {display: none !important}
+    .mWidth100 {width:100% !important; max-width: 100% !important; min-width: 100% !important}
+    .mImage650 img {-ms-interpolation-mode: bicubic !important; width: 100% !important; max-width: 650px !important; height: auto !important}
+    .padSides20 {padding-left:20px !important; padding-right:20px !important}
+    .alignCenter {text-align:center !important; padding-bottom:20px !important}
+}

@@ -1,0 +1,91 @@
+App\Entity\MatchingCriteria:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      processor: 'App\StateProcessor\CreateMatchingCriteriaStateProcessor'
+    ApiPlatform\Metadata\Patch:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    ApiPlatform\Metadata\Delete:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    ApiPlatform\Metadata\GetCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      filters:
+        - 'general_order_filter'
+        - 'matching_criteria_order_filter'
+        - 'App\Filter\RegionMatchingCriteriaFilter'
+        - 'App\Filter\TaskTypeIdsMatchingCriteriaFilter'
+        - 'App\Filter\UserIdsMatchingCriteriaFilter'
+        - 'App\Filter\CompanyIdsMatchingCriteriaFilter'
+        - 'App\Filter\TaskTypeNamesMatchingCriteriaFilter'
+    ApiPlatform\Metadata\Get:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+
+    bulkDeleteMatchingCriteria:
+      class: ApiPlatform\Metadata\Post
+      method: POST
+      uriTemplate: '/matching_criterias/bulk_delete'
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      input: 'App\Dto\BulkDeleteDto'
+      output: false
+      processor: 'App\StateProcessor\BulkDeleteMatchingCriteriaStateProcessor'
+
+    createMultiMatchingCriteria:
+      class: ApiPlatform\Metadata\Post
+      method: POST
+      uriTemplate: '/matching_criterias/create_multi'
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      input: 'App\Dto\MultiMatchingCriteriaDto'
+      output: 'App\Dto\ResponseDto'
+      read: false
+      processor: 'App\StateProcessor\CreateMultiMatchingCriteriaStateProcessor'
+
+  graphQlOperations:
+    update:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      filters:
+        - 'general_order_filter'
+        - 'matching_criteria_order_filter'
+        - 'App\Filter\RegionMatchingCriteriaFilter'
+        - 'App\Filter\TaskTypeIdsMatchingCriteriaFilter'
+        - 'App\Filter\UserIdsMatchingCriteriaFilter'
+        - 'App\Filter\CompanyIdsMatchingCriteriaFilter'
+        - 'App\Filter\TaskTypeNamesMatchingCriteriaFilter'
+      paginationType: 'page'
+    ApiPlatform\Metadata\GraphQl\Query:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+
+    bulkDelete:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      input: 'App\Dto\BulkDeleteDto'
+      processor: 'App\StateProcessor\BulkDeleteMatchingCriteriaStateProcessor'
+      args:
+        ids:
+          type: 'Iterable!'
+
+    createMulti:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      input: 'App\Dto\MultiMatchingCriteriaDto'
+      output: false
+      processor: 'App\StateProcessor\CreateMultiMatchingCriteriaStateProcessor'
+      args:
+        users:
+          type: 'Iterable!'
+        companies:
+          type: 'Iterable!'
+        taskTypes:
+          type: 'Iterable!'
+        minRegion:
+          type: 'Int!'
+        maxRegion:
+          type: 'Int!'

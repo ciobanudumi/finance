@@ -1,0 +1,164 @@
+{
+    "name": "finance/api",
+    "description": "",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "ext-json": "*",
+        "api-platform/core": "3.1.*",
+        "composer/semver": "^3.2",
+        "doctrine/annotations": "^2.0",
+        "doctrine/common": "^3.2",
+        "doctrine/doctrine-bundle": "^2.9",
+        "doctrine/doctrine-migrations-bundle": "3.2.*",
+        "doctrine/inflector": "2.0.*",
+        "doctrine/lexer": "^2.1",
+        "doctrine/migrations": "^3.4",
+        "doctrine/orm": "^2.15",
+        "doctrine/persistence": "^3.1",
+        "doctrine/sql-formatter": "1.1.*",
+        "egulias/email-validator": "^4.0.1",
+        "gedmo/doctrine-extensions": "^3.13",
+        "gesdinet/jwt-refresh-token-bundle": "^1.1",
+        "lcobucci/clock": "^3.1",
+        "lcobucci/jwt": "^4.0",
+        "lexik/jwt-authentication-bundle": "^2.18",
+        "monolog/monolog": "^3.3",
+        "nelmio/cors-bundle": "2.3.*",
+        "nikic/php-parser": "4.15.*",
+        "phpdocumentor/reflection-docblock": "5.3.*",
+        "phpdocumentor/type-resolver": "1.7.*",
+        "predis/predis": "2.1.*",
+        "stof/doctrine-extensions-bundle": "^1.9",
+        "symfony/amazon-mailer": "6.2.*",
+        "symfony/asset": "6.2.*",
+        "symfony/cache": "6.2.*",
+        "symfony/config": "6.2.*",
+        "symfony/console": "6.2.*",
+        "symfony/dependency-injection": "6.2.*",
+        "symfony/doctrine-bridge": "6.2.*",
+        "symfony/doctrine-messenger": "6.2.*",
+        "symfony/dom-crawler": "6.2.*",
+        "symfony/dotenv": "6.2.*",
+        "symfony/error-handler": "6.2.*",
+        "symfony/event-dispatcher": "6.2.*",
+        "symfony/event-dispatcher-contracts": "3.2.*",
+        "symfony/expression-language": "6.2.*",
+        "symfony/finder": "6.2.*",
+        "symfony/flex": "2.2.*",
+        "symfony/framework-bundle": "6.2.*",
+        "symfony/google-mailer": "6.2.*",
+        "symfony/http-client": "6.2.*",
+        "symfony/http-foundation": "6.2.*",
+        "symfony/http-kernel": "6.2.*",
+        "symfony/intl": "6.2.*",
+        "symfony/mailer": "6.2.*",
+        "symfony/messenger": "6.2.*",
+        "symfony/mime": "6.2.*",
+        "symfony/monolog-bridge": "6.2.*",
+        "symfony/monolog-bundle": "3.8.*",
+        "symfony/options-resolver": "6.2.*",
+        "symfony/password-hasher": "6.2.*",
+        "symfony/polyfill-intl-icu": "1.27.*",
+        "symfony/polyfill-intl-idn": "^1.24",
+        "symfony/process": "6.2.*",
+        "symfony/property-access": "6.2.*",
+        "symfony/property-info": "6.2.*",
+        "symfony/redis-messenger": "6.2.*",
+        "symfony/routing": "6.2.*",
+        "symfony/runtime": "6.2.*",
+        "symfony/security-bundle": "6.2.*",
+        "symfony/security-core": "6.2.*",
+        "symfony/security-csrf": "6.2.*",
+        "symfony/security-http": "6.2.*",
+        "symfony/serializer": "6.2.*",
+        "symfony/string": "6.2.*",
+        "symfony/translation": "6.2.*",
+        "symfony/twig-bridge": "6.2.*",
+        "symfony/twig-bundle": "6.2.*",
+        "symfony/uid": "6.2.*",
+        "symfony/validator": "6.2.*",
+        "symfony/var-exporter": "6.2.*",
+        "symfony/web-link": "6.2.*",
+        "symfony/yaml": "6.2.*",
+        "twig/twig": "^3.3",
+        "webonyx/graphql-php": "15.2.*",
+        "willdurand/negotiation": "3.1.*"
+    },
+    "require-dev": {
+        "api-platform/schema-generator": "^5.0",
+        "symfony/browser-kit": "6.2.*",
+        "symfony/css-selector": "6.2.*",
+        "symfony/debug-bundle": "6.2.*",
+        "symfony/maker-bundle": "1.48.*",
+        "symfony/phpunit-bridge": "6.2.*",
+        "symfony/stopwatch": "6.2.*",
+        "symfony/var-dumper": "6.2.*",
+        "symfony/web-profiler-bundle": "6.2.*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "bin-compat": "full",
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "platform": {
+            "php": "8.2.4"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-intl-normalizer": "*",
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-intl-grapheme": "*",
+        "symfony/polyfill-php82": "*",
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-php71": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "6.2.*"
+        }
+    }
+}

@@ -1,0 +1,115 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.7.14",
+    "@coreui/coreui": "^4.2.6",
+    "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",
+    "@coreui/coreui-pro": "^4.5.0",
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.1.0",
+    "@coreui/react": "^4.9.0",
+    "@coreui/react-pro": "4.12.2",
+    "@hookform/resolvers": "3.3.1",
+    "@reach/router": "^1.3.4",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-table": "^8.9.8",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^20.1.1",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/shelljs": "^0.8.12",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "graphql": "^16.6.0",
+    "husky": "^8.0.3",
+    "i18next": "^22.4.15",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-scanner": "^4.2.0",
+    "lint-staged": "10",
+    "lodash": "^4.17.21",
+    "moment": "moment/moment",
+    "node-plop": "^0.31.1",
+    "prettier": "2.8.8",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "13.1.0",
+    "react-datepicker": "^4.23.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^1.3.0",
+    "react-hook-form": "7.46.1",
+    "react-i18next": "^12.2.2",
+    "react-redux": "^8.0.5",
+    "react-router": "^6.15.0",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^6.11.1",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.7.3",
+    "react-table": "7.6.3",
+    "react-window": "1.8.7",
+    "redux-injectors": "^2.1.0",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.2.3",
+    "saga-slice": "^1.3.0",
+    "sass": "^1.62.1",
+    "shelljs": "^0.8.5",
+    "styled-components": "^6.0.0-rc.1",
+    "typescript": "^5.0.4",
+    "utils": "^0.3.1",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
+    "start:prod": "yarn run build && serve -s build",
+    "checkTs": "tsc --noEmit",
+    "eslint": "eslint --ext js,ts,tsx",
+    "lint": "yarn run eslint src",
+    "lint:strict": "yarn run eslint --max-warnings=0 --ext js,ts,tsx src",
+    "lint:fix": "yarn run eslint --fix src",
+    "lint:css": "stylelint src/**/*.css",
+    "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
+    "prettify": "prettier --write",
+    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
+    "postinstall": "husky install"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "yarn run eslint --fix",
+      "yarn run lint:strict"
+    ],
+    "*.{md,json,ts,tsx,js,jsx}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@types/redux-logger": "^3.0.9"
+  }
+}

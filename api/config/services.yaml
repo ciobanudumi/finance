@@ -1,0 +1,67 @@
+parameters:
+
+imports:
+    - { resource: Filters.yaml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\EventListener\AuthenticationSuccessListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+
+    App\StateProcessor\SetPasswordUserStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\CreateUserStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+        arguments:
+            $mailerMailFrom: '%mailer_mail_from%'
+            $financeClientSetPasswordRoute: '%finance_client_set_password_route%'
+            $financeClientUrl: '%finance_client_url%'
+
+    App\StateProcessor\CreateTaskStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\CreateTaskPatchInstallStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\CreateTaskPatchMigrateStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\CreateTaskPatchRemoveStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\CreateTaskOnsiteInstallationStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\ChangeTaskStatusProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\StateProcessor\EditTaskSetStateProcessor:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]

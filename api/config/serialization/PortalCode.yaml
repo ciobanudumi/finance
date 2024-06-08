@@ -1,0 +1,10 @@
+App\Entity\PortalCode:
+  attributes:
+    id:
+      groups: [ 'portal-code', 'task' ]
+    type:
+      groups: [ 'portal-code', 'task' ]
+    code:
+      groups: [ 'portal-code', 'task' ]
+    description:
+      groups: [ 'portal-code', 'task' ]

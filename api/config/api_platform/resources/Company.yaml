@@ -1,0 +1,47 @@
+App\Entity\Company:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    ApiPlatform\Metadata\Patch:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    ApiPlatform\Metadata\Delete:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    ApiPlatform\Metadata\GetCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      filters:
+        - 'general_order_filter'
+        - 'boolean_filter'
+        - 'company_search_filter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaFilter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaForUserFilter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaOfTaskTypeFilter'
+        - 'App\Filter\CompaniesWithTasksFilter'
+    ApiPlatform\Metadata\Get:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+
+  graphQlOperations:
+    create:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+    update:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      filters:
+        - 'general_order_filter'
+        - 'boolean_filter'
+        - 'company_search_filter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaFilter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaForUserFilter'
+        - 'App\Filter\CompaniesWithMatchingCriteriaOfTaskTypeFilter'
+        - 'App\Filter\CompaniesWithTasksFilter'
+      paginationType: 'page'
+    ApiPlatform\Metadata\GraphQl\Query:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'

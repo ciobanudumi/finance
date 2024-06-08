@@ -1,0 +1,26 @@
+App\Entity\TaskPatchRemove:
+  attributes:
+    registrationDate:
+      groups: [ 'task-patch-remove' ]
+    rfTasksetId:
+      groups: [ 'task-patch-remove' ]
+    pop:
+      groups: [ 'task-patch-remove' ]
+    row:
+      groups: [ 'task-patch-remove' ]
+    frame:
+      groups: [ 'task-patch-remove' ]
+    block:
+      groups: [ 'task-patch-remove' ]
+    trayFiber:
+      groups: [ 'task-patch-remove' ]
+    positionFiber:
+      groups: [ 'task-patch-remove' ]
+    portingId:
+      groups: [ 'task-patch-remove' ]
+    equipment:
+      groups: [ 'task-patch-remove' ]
+    activePort:
+      groups: [ 'task-patch-remove' ]
+    positionEquipment:
+      groups: [ 'task-patch-remove' ]

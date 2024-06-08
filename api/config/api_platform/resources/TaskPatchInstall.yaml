@@ -1,0 +1,45 @@
+App\Entity\TaskPatchInstall:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_TASK_OPERATIONS"))'
+      input: 'App\Dto\CreateTaskPatchInstallDto'
+      processor: 'App\StateProcessor\CreateTaskPatchInstallStateProcessor'
+    ApiPlatform\Metadata\Patch:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_TASK_OPERATIONS")) ||
+                  is_granted(constant("App\\Entity\\User::ROLE_ENGINEER"))'
+      input: 'App\Dto\EditTaskPatchInstallDto'
+      processor: 'App\StateProcessor\EditTaskPatchInstallStateProcessor'
+    ApiPlatform\Metadata\Delete: ~
+    ApiPlatform\Metadata\GetCollection:
+      filters: [ 'general_order_filter' ]
+      normalizationContext:
+        groups: [ 'task', 'task-patch-install' ]
+    ApiPlatform\Metadata\Get:
+      normalizationContext:
+        groups: [ 'task', 'task-patch-install' ]
+
+  graphQlOperations:
+    create:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_TASK_OPERATIONS"))'
+      input: 'App\Dto\CreateTaskPatchInstallDto'
+      processor: 'App\StateProcessor\CreateTaskPatchInstallStateProcessor'
+    update:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_TASK_OPERATIONS")) ||
+                  is_granted(constant("App\\Entity\\User::ROLE_ENGINEER"))'
+      input: 'App\Dto\EditTaskPatchInstallDto'
+      processor: 'App\StateProcessor\EditTaskPatchInstallStateProcessor'
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      normalizationContext:
+        groups: [ 'task', 'task-patch-install' ]
+      filters: [ 'general_order_filter' ]
+      paginationType: 'page'
+    ApiPlatform\Metadata\GraphQl\Query:
+      normalizationContext:
+        groups: [ 'task', 'task-patch-install' ]

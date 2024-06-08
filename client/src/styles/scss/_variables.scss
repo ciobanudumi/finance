@@ -1,0 +1,26 @@
+// Variable overrides
+@import 'finance_variables';
+
+$primary:$finance-dark-green;
+
+$sidebar-dark-bg:                   $finance-green;
+$sidebar-dark-nav-link-hover-bg:    $finance-dark-green;
+$sidebar-dark-nav-link-active-bg:   $finance-dark-green;
+
+$subheader-dark-color:              $finance-yellow;
+
+$pagination-active-bg:              $finance-dark-green;
+
+$card-cap-color:                    $finance-dark-green;
+
+$toast-color:                       rgba(#fff, 1);
+$toast-header-color:                rgba(#fff, 1);
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: $finance-xxl-breakpoint
+);

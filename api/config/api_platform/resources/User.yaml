@@ -1,0 +1,70 @@
+App\Entity\User:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post:
+      processor: 'App\StateProcessor\CreateUserStateProcessor'
+      input: 'App\Dto\CreateUserDto'
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    setPassword:
+      class: ApiPlatform\Metadata\Post
+      method: POST
+      input: 'App\Dto\SetPasswordUserInputDto'
+      uriTemplate: "/users/set-password"
+      controller: 'App\Controller\SetPasswordUserController'
+      output: 'App\ApiResource\DefaultResponseOutput'
+    ApiPlatform\Metadata\Patch:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) ||
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    ApiPlatform\Metadata\Delete:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    ApiPlatform\Metadata\GetCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) || 
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      filters:
+        - 'general_order_filter'
+        - 'boolean_filter'
+        - 'user_search_filter'
+        - 'App\Filter\CreateTaskMatchingCriteriaFilter'
+        - 'App\Filter\AssigneeTaskSetMatchingCriteriaFilter'
+        - 'App\Filter\UsersWithMatchingCriteriaFilter'
+      normalizationContext:
+        groups: [ 'user' ]
+    ApiPlatform\Metadata\Get:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) || 
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      normalizationContext:
+        groups: [ 'user', 'taskSet']
+
+  graphQlOperations:
+    create:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+      processor: 'App\StateProcessor\CreateUserStateProcessor'
+      input: 'App\Dto\CreateUserDto'
+    update:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) || 
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN"))'
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) || 
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      filters:
+        - 'general_order_filter'
+        - 'boolean_filter'
+        - 'user_search_filter'
+        - 'App\Filter\CreateTaskMatchingCriteriaFilter'
+        - 'App\Filter\AssigneeTaskSetMatchingCriteriaFilter'
+        - 'App\Filter\UsersWithMatchingCriteriaFilter'
+      paginationType: 'page'
+      normalizationContext:
+        groups: [ 'user' ]
+    ApiPlatform\Metadata\GraphQl\Query:
+      security: 'is_granted(constant("App\\Entity\\User::ROLE_ADMIN")) || 
+                  is_granted(constant("App\\Entity\\User::ROLE_INTERNAL"))'
+      normalizationContext:
+        groups: [ 'user' ]

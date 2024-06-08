@@ -1,0 +1,52 @@
+grumphp:
+  environment:
+    paths:
+      - 'bin'
+  tasks:
+    git_commit_message:
+      max_subject_width: 150
+      matchers:
+        - /PRI-\d+|Merge/
+
+    git_branch_name:
+      whitelist:
+        - (PRI-\d+|develop|master|production)
+
+    phpcsfixer2:
+      config: 'coding_standards/.php-cs-fixer.dist.php'
+      allow_risky: true
+
+    phpcpd:
+      min_lines: 20
+      exclude: ['vendor', 'var']
+
+    #    phpcs:
+    #      whitelist_patterns:
+    #        - /^src\/(.*)/
+
+
+    #    phpmd:
+    #      ruleset: ['coding_standards/phpmd.xml']
+
+    phpstan:
+      configuration: 'coding_standards/phpstan.neon'
+      use_grumphp_paths: true
+      level: 7
+      memory_limit: "-1"
+
+    composer:
+      file: ./composer.json
+      no_check_all: false
+      no_check_lock: false
+      no_local_repository: false
+      with_dependencies: false
+      strict: true
+
+  testsuites:
+    code_quality:
+      tasks:
+        - composer
+        - phpcsfixer2
+        - phpcpd
+        #        - phpmd
+        - phpstan

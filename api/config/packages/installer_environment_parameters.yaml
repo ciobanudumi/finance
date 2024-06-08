@@ -1,0 +1,5 @@
+# This file is auto-generated during the composer install
+parameters:
+    mailer_mail_from: '%env(MAILER_ADDRESS_MAIL_FROM)%'
+    finance_client_url: '%env(FINANCE_CLIENT_URL)%'
+    finance_client_set_password_route: '%env(FINANCE_CLIENT_SET_PASSWORD_ROUTE)%'

@@ -1,0 +1,30 @@
+App\Entity\TaskPatchInstall:
+  attributes:
+    registrationDate:
+      groups: [ 'task-patch-install' ]
+    rfTasksetId:
+      groups: [ 'task-patch-install' ]
+    pop:
+      groups: [ 'task-patch-install' ]
+    row:
+      groups: [ 'task-patch-install' ]
+    frame:
+      groups: [ 'task-patch-install' ]
+    block:
+      groups: [ 'task-patch-install' ]
+    trayFiber:
+      groups: [ 'task-patch-install' ]
+    positionFiber:
+      groups: [ 'task-patch-install' ]
+    portingId:
+      groups: [ 'task-patch-install' ]
+    equipment:
+      groups: [ 'task-patch-install' ]
+    activePort:
+      groups: [ 'task-patch-install' ]
+    positionEquipment:
+      groups: [ 'task-patch-install' ]
+    patchcordLength:
+      groups: [ 'task-patch-install' ]
+    patchcordThickness:
+      groups: [ 'task-patch-install' ]

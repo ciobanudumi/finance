@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  php:
+    build:
+      context: .
+      target: finance_api_platform_php
+    image: ${PHP_IMAGE:-quay.io/api-platform/php}
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      - db
+    volumes:
+      - .:/srv/finance-api:rw,cached
+      - ./docker/php/conf.d/api-platform.dev.ini/:/usr/local/etc/php/conf.d/api-platform.ini
+      # if you develop on Linux, you may use a bind-mounted host directory instead
+      # - ./api/var:/srv/api/var:rw
+
+  api:
+    build:
+      context: .
+      target: finance_api_platform_nginx
+    image: ${NGINX_IMAGE:-quay.io/api-platform/nginx}
+    depends_on:
+      - php
+    volumes:
+      - ./public:/srv/finance-api/public:ro
+    ports:
+      - target: 80
+        published: 8080
+        protocol: tcp
+
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=api
+      - MYSQL_USER=api
+      - MYSQL_PASSWORD=api
+    volumes:
+      - db-data:/var/lib/mysql:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./api/docker/db/data:/var/lib/mysql:rw
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+
+volumes:
+  db-data: {}

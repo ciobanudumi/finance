@@ -1,0 +1,38 @@
+App\Entity\Task:
+  attributes:
+    id:
+      groups: [ 'task' ]
+    company:
+      groups: [ 'task' ]
+    preferredExecutor:
+      groups: [ 'task' ]
+    onBehalfOf:
+      groups: [ 'task' ]
+    createdAt:
+      groups: [ 'task' ]
+    wishDate:
+      groups: [ 'task' ]
+    executionDate:
+      groups: [ 'task' ]
+    finished:
+      groups: [ 'task' ]
+    taskSet:
+      groups: [ 'task' ]
+    region:
+      groups: [ 'task' ]
+    taskType:
+      groups: [ 'task' ]
+    portType:
+      groups: [ 'task' ]
+    migration:
+      groups: [ 'task' ]
+    contactPerson:
+      groups: [ 'task' ]
+    status:
+      groups: [ 'task' ]
+    holdCode:
+      groups: [ 'task' ]
+    holdReason:
+      groups: [ 'task' ]
+    holdExpectedResumeDate:
+      groups: [ 'task' ]

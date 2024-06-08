@@ -1,0 +1,16 @@
+App\Entity\User:
+  attributes:
+    id:
+      groups: [ 'user', 'taskSet']
+    name:
+      groups: [ 'user', 'taskSet', 'task']
+    username:
+      groups: [ 'user' ]
+    email:
+      groups: [ 'user' ]
+    roles:
+      groups: [ 'user' ]
+    password:
+      groups: []
+    companies:
+      groups: ['user']

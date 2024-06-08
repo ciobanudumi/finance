@@ -1,0 +1,23 @@
+App\Entity\Region:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post: ~
+    ApiPlatform\Metadata\Patch: ~
+    ApiPlatform\Metadata\Delete: ~
+    ApiPlatform\Metadata\GetCollection:
+      filters: [ 'general_order_filter' ]
+    ApiPlatform\Metadata\Get: ~
+
+  graphQlOperations:
+    create:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+    update:
+      class: ApiPlatform\Metadata\GraphQl\Mutation
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      filters: [ 'general_order_filter' ]
+      paginationType: 'page'
+    ApiPlatform\Metadata\GraphQl\Query: ~
