@@ -1,9 +1,7 @@
-
 import { cloneDeep } from '@apollo/client/utilities';
 import { generateRoute } from '../utils/routeHandling';
 import { CNavItem } from '@coreui/react';
 import { cilBalanceScale, cilContact, cilList, cilPeople, cilSpeedometer, cilTask } from '@coreui/icons';
-
 
 const _nav = [
   {
