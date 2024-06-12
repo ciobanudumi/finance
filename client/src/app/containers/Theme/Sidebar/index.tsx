@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { CSidebar, CSidebarNav, CSidebarBrand, CSidebarToggler, CNavTitle } from '@coreui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CNavTitle, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react';
 // sidebar nav config
 import navigation, { allowedMenuItems } from '../../../_nav';
 import { selectSidebarShow, selectSidebarUnfoldable } from '../Layout/selectors';
-import i18next, { t } from 'i18next';
+import i18next from 'i18next';
 import CIcon from '@coreui/icons-react';
 import { layoutActions } from '../Layout/slice';
 import { NavLink } from 'react-router-dom';
@@ -31,7 +31,7 @@ export const Sidebar = () => {
               {navItem.to ? (
                 <CNavItem component={NavLink} to={navItem.to} key={index}>
                   <CIcon customClassName="nav-icon" icon={navItem.icon} />
-                  {navItem.name}
+                  {navItem.name.charAt(0).toUpperCase() + navItem.name.slice(1)}
                 </CNavItem>
               ) : (
                 <CNavTitle key={index}>
@@ -49,7 +49,9 @@ export const Sidebar = () => {
   return (
     <CSidebar position="fixed" visible={showSidebar} unfoldable={unfoldableSidebar}>
       <CSidebarNav>
-        <CSidebarBrand>Finance</CSidebarBrand>
+        <CSidebarBrand>
+          <h4>Finance</h4>
+        </CSidebarBrand>
         {navItems}
       </CSidebarNav>
       <CSidebarToggler

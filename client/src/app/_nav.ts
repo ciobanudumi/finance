@@ -1,7 +1,7 @@
 import { cloneDeep } from '@apollo/client/utilities';
 import { generateRoute } from '../utils/routeHandling';
 import { CNavItem } from '@coreui/react';
-import { cilBalanceScale, cilContact, cilList, cilPeople, cilSpeedometer, cilTask } from '@coreui/icons';
+import { cilBalanceScale, cilSpeedometer } from '@coreui/icons';
 
 const _nav = [
   {
@@ -9,6 +9,12 @@ const _nav = [
     name: 'dashboard',
     to: '/dashboard',
     icon: cilSpeedometer,
+  },
+  {
+    component: CNavItem,
+    name: 'summary',
+    to: '/summary',
+    icon: cilBalanceScale,
   },
 ];
 
@@ -41,6 +47,7 @@ export function allowedMenuItems(items): Array<any> {
 
   return allowedItems;
 }
+
 const isAllowed = menuItem =>
   !('isGrantedFunction' in menuItem) || ('isGrantedFunction' in menuItem && menuItem.isGrantedFunction());
 

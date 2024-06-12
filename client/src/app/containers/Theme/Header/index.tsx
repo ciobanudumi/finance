@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { CHeader, CContainer, CHeaderToggler, CHeaderDivider } from '@coreui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CContainer, CHeader, CHeaderDivider, CHeaderToggler } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilLockLocked, cilUser } from '@coreui/icons';
+import { cilLockLocked, cilMenu, cilUser } from '@coreui/icons';
 
 import { selectSidebarShow } from '../Layout/selectors';
 import { layoutActions } from '../Layout/slice';
-import { cilMenu } from '@coreui/icons';
 import { privateRoutes } from '../../../routes';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../../../types/AppRoutes';
@@ -22,7 +21,6 @@ import {
 } from '@coreui/react-pro';
 import { Breadcrumb } from './types';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { selectLoading, selectUser } from '../../App/selectors';
 import { appActions } from '../../App/slice';
 
@@ -88,8 +86,8 @@ export const Header = memo(() => {
       <CBreadcrumb className="m-0 ms-2 my-2">
         {breadcrumbs.map((breadcrumb, index) => {
           return (
-            <CBreadcrumbItem href={breadcrumb.pathname} key={index}>
-              {breadcrumb.name}
+            <CBreadcrumbItem href={breadcrumb.pathname} key={index} className="text-decoration-none">
+              {breadcrumb.name.charAt(0).toUpperCase() + breadcrumb.name.slice(1)}
             </CBreadcrumbItem>
           );
         })}
