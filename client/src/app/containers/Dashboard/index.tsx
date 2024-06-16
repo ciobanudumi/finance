@@ -19,7 +19,7 @@ import {
 } from '@coreui/react-pro';
 import CIcon from '@coreui/icons-react';
 import { cilArrowBottom, cilArrowTop, cilOptions, cilPencil, cilTrash } from '@coreui/icons';
-import { CBadge, CButton, CCardBody, CCollapse } from '@coreui/react';
+import { CBadge, CButton, CCardBody, CCollapse, CNav, CNavItem, CNavLink } from '@coreui/react';
 
 export default function Dashboard() {
   useInjectReducer({ key: sliceKey, reducer: reducer });
@@ -382,6 +382,39 @@ export default function Dashboard() {
           />
         </CCol>
       </CRow>
+      <CNav variant="pills" layout="fill" color="secondary" className="mb-3">
+        <CNavItem>
+          <CNavLink href="#" active>
+            June
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#">July</CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#">August</CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#" disabled>
+            September
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#" disabled>
+            October
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#" disabled>
+            November
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink href="#" disabled>
+            December
+          </CNavLink>
+        </CNavItem>
+      </CNav>
       <CRow className="mb-4 border">
         <CSmartTable
           activePage={2}

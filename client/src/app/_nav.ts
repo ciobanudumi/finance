@@ -1,7 +1,7 @@
 import { cloneDeep } from '@apollo/client/utilities';
 import { generateRoute } from '../utils/routeHandling';
 import { CNavItem } from '@coreui/react';
-import { cilBalanceScale, cilSpeedometer } from '@coreui/icons';
+import { cilBalanceScale, cilSettings, cilSpeedometer } from '@coreui/icons';
 
 const _nav = [
   {
@@ -15,6 +15,12 @@ const _nav = [
     name: 'summary',
     to: '/summary',
     icon: cilBalanceScale,
+  },
+  {
+    component: CNavItem,
+    name: 'settings',
+    to: '/settings',
+    icon: cilSettings,
   },
 ];
 
