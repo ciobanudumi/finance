@@ -344,9 +344,9 @@ export default function Dashboard() {
               <div className="mb-4">
                 <h1>Total Expenses</h1>
                 <span className="mb-4">
-                  -$5.670{' '}
+                  -$5.688{' '}
                   <span className="fs-6 fw-normal">
-                    (65.9% <CIcon icon={cilArrowBottom} />)
+                    (63.2% <CIcon icon={cilArrowBottom} />)
                   </span>
                 </span>
                 <div className="fs-6 fw-light text-light">in 67 transactions</div>
@@ -374,7 +374,7 @@ export default function Dashboard() {
               <div className="mb-4">
                 <h1>Remaining Balance</h1>
                 <span className="mb-4">
-                  $4.330 <span className="fs-6 fw-normal">(38.9%)</span>
+                  $3312 <span className="fs-6 fw-normal">(36.8%)</span>
                 </span>
                 <div className="fs-6 fw-light text-light">7 days</div>
               </div>
