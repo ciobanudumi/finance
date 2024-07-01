@@ -54,27 +54,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'assignee', targetEntity: TaskSet::class)]
-    private Collection $taskSets;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MatchingCriteria::class)]
-    private Collection $matchingCriterias;
-
-    #[Assert\Count(min: 1)]
-    #[ORM\ManyToMany(targetEntity: Company::class, inversedBy: 'users')]
-    private Collection $companies;
-
-    #[ORM\Column(length: 255)]
+       #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(mappedBy: 'preferred_executor', targetEntity: Task::class)]
-    private Collection $preferredExecutorTasks;
+       #[ORM\OneToMany(mappedBy: 'user', targetEntity: Transactions::class, orphanRemoval: true)]
+       private Collection $transactions;
+
+       #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+       private Collection $notifications;
+
 
     public function __construct()
     {
-        $this->taskSets = new ArrayCollection();
-        $this->matchingCriterias = new ArrayCollection();
-        $this->companies = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,91 +157,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     }
 
-    /**
-     * @return Collection<int, TaskSet>
-     */
-    public function getTaskSets(): Collection
-    {
-        return $this->taskSets;
-    }
-
-    public function addTaskSet(TaskSet $taskSet): self
-    {
-        if (!$this->taskSets->contains($taskSet)) {
-            $this->taskSets->add($taskSet);
-            $taskSet->setAssignee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTaskSet(TaskSet $taskSet): self
-    {
-        if ($this->taskSets->removeElement($taskSet)) {
-            // set the owning side to null (unless already changed)
-            if ($taskSet->getAssignee() === $this) {
-                $taskSet->setAssignee(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, MatchingCriteria>
-     */
-    public function getMatchingCriterias(): Collection
-    {
-        return $this->matchingCriterias;
-    }
-
-    public function addMatchingCriteria(MatchingCriteria $matchingCriteria): self
-    {
-        if (!$this->matchingCriterias->contains($matchingCriteria)) {
-            $this->matchingCriterias->add($matchingCriteria);
-            $matchingCriteria->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMatchingCriteria(MatchingCriteria $matchingCriteria): self
-    {
-        if ($this->matchingCriterias->removeElement($matchingCriteria)) {
-            // set the owning side to null (unless already changed)
-            if ($matchingCriteria->getUser() === $this) {
-                $matchingCriteria->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Company>
-     */
-    public function getCompanies(): Collection
-    {
-        return $this->companies;
-    }
-
-    public function addCompany(Company $company): self
-    {
-        if (!$this->companies->contains($company)) {
-            $this->companies->add($company);
-        }
-
-        return $this;
-    }
-
-    public function removeCompany(Company $company): self
-    {
-        $this->companies->removeElement($company);
-
-        return $this;
-    }
-
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -261,13 +169,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPreferredExecutorTasks(): Collection
+    /**
+     * @return Collection<int, Transactions>
+     */
+    public function getTransactions(): Collection
     {
-        return $this->preferredExecutorTasks;
+        return $this->transactions;
     }
 
-    public function setPreferredExecutorTasks(Collection $preferredExecutorTasks): void
+    public function addTransaction(Transactions $transaction): self
     {
-        $this->preferredExecutorTasks = $preferredExecutorTasks;
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions->add($transaction);
+            $transaction->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transactions $transaction): self
+    {
+        if ($this->transactions->removeElement($transaction)) {
+            // set the owning side to null (unless already changed)
+            if ($transaction->getUser() === $this) {
+                $transaction->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -8,24 +8,6 @@ services:
     autoconfigure: false
     public: false
 
-  matching_criteria_order_filter:
-    parent: 'api_platform.doctrine.orm.order_filter'
-    arguments:
-      $properties: { user.name: ~, company.name: ~ , region.region: ~ , taskType.name: ~ }
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
-  task_order_filter:
-    parent: 'api_platform.doctrine.orm.order_filter'
-    arguments:
-      $properties: {company.name: ~ , region.region: ~ , taskSet.id: ~ }
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
   boolean_filter:
     parent: 'api_platform.doctrine.orm.boolean_filter'
     arguments: [ ~ ]
@@ -34,49 +16,9 @@ services:
     autoconfigure: false
     public: false
 
-  company_search_filter:
-    parent: 'api_platform.doctrine.orm.search_filter'
-    arguments: [ { name: 'partial' } ]
-    tags:  [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
   user_search_filter:
     parent: 'api_platform.doctrine.orm.search_filter'
     arguments: [ { name: 'partial' } ]
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
-  task_type_search_filter:
-    parent: 'api_platform.doctrine.orm.search_filter'
-    arguments: [ { name: 'partial' } ]
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
-  task_set_search_filter:
-    parent: 'api_platform.doctrine.orm.search_filter'
-    arguments: [ { id: 'partial' } ]
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
-  region_task_search_filter:
-    parent: 'api_platform.doctrine.orm.search_filter'
-    arguments: [ { region: 'partial' } ]
-    tags: [ 'api_platform.filter' ]
-    autowire: false
-    autoconfigure: false
-    public: false
-
-  portal_codes_search_filter:
-    parent: 'api_platform.doctrine.orm.search_filter'
-    arguments: [ { type: 'exact', taskTypes.id: 'exact', taskTypes.name: 'exact' } ]
     tags: [ 'api_platform.filter' ]
     autowire: false
     autoconfigure: false

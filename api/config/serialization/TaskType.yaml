@@ -1,8 +1,0 @@
-App\Entity\TaskType:
-  attributes:
-    id:
-      groups: [ 'task' ]
-    name:
-      groups: [ 'task' ]
-    portalCodes:
-      groups: [ 'task', 'portal-code' ]

@@ -1,4 +1,0 @@
-App\Entity\Company:
-  attributes:
-    name:
-      groups: [ 'task', 'task-patch-install', 'task-patch-migrate', 'task-patch-remove' , 'task-onsite-installation' ]

@@ -31,34 +31,6 @@ services:
             $financeClientSetPasswordRoute: '%finance_client_set_password_route%'
             $financeClientUrl: '%finance_client_url%'
 
-    App\StateProcessor\CreateTaskStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\CreateTaskPatchInstallStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\CreateTaskPatchMigrateStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\CreateTaskPatchRemoveStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\CreateTaskOnsiteInstallationStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\ChangeTaskStatusProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
-    App\StateProcessor\EditTaskSetStateProcessor:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'
-
     gedmo.listener.softdeleteable:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
         tags:

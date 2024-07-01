@@ -1,4 +1,0 @@
-App\Entity\Region:
-  attributes:
-    region:
-      groups: ['task']

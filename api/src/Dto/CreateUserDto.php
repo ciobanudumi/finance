@@ -19,7 +19,4 @@ final class CreateUserDto
     #[Assert\NotBlank]
     #[Assert\Choice(choices: User::ALLOWED_ROLES, multiple: true)]
     public array $roles;
-
-    #[Assert\NotBlank]
-    public array $companies;
 }
