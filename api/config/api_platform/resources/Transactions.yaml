@@ -1,0 +1,21 @@
+App\Entity\Transactions:
+  properties:
+    id:
+      identifier: true
+  operations:
+    ApiPlatform\Metadata\Post: ~
+    ApiPlatform\Metadata\GetCollection:
+      filters:
+        - 'date_transaction_filter'
+        - 'date_transaction_order_filter'
+    ApiPlatform\Metadata\Get: ~
+  graphQlOperations:
+#    create: ~
+#    update: ~
+    delete:
+      class: ApiPlatform\Metadata\GraphQl\DeleteMutation
+    ApiPlatform\Metadata\GraphQl\QueryCollection:
+      filters:
+        - 'date_transaction_filter'
+        - 'date_transaction_order_filter'
+    ApiPlatform\Metadata\GraphQl\Query: ~

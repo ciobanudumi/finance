@@ -1,6 +1,5 @@
 /* --- STATE --- */
-export interface DashboardState {
-  selectedCustomer: boolean;
+export interface SummaryState {
   transactions: Transaction[];
   totalTransactionsCount: number | null;
   period: Period;
@@ -22,8 +21,8 @@ export interface Transaction {
   description: string;
   type: string;
   category: Category;
-  date: string;
   recursive: boolean;
+  date: string;
 }
 
 export interface TransactionsResponse {
@@ -39,4 +38,9 @@ export interface TransactionsResponse {
   };
 }
 
-export type ContainerState = DashboardState;
+export interface AmountPerMonths {
+  name: string;
+  amount: number;
+}
+
+export type ContainerState = SummaryState;

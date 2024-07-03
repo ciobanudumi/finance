@@ -1,0 +1,5 @@
+App\Entity\RecursiveTransaction:
+  properties:
+    id:
+      identifier: true
+  

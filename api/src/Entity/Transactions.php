@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TransactionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TransactionsRepository::class)]
 #[ApiResource]
+//#[ApiResource(filters: ['date_transaction_filter'])]
 class Transactions
 {
     #[ORM\Id]
@@ -39,6 +42,9 @@ class Transactions
 
     #[ORM\OneToMany(mappedBy: 'transaction', targetEntity: RecursiveTransaction::class)]
     private Collection $recursiveTransactions;
+
+    #[ORM\ManyToOne(inversedBy: 'transactions')]
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -148,6 +154,18 @@ class Transactions
                 $recursiveTransaction->setTransaction(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

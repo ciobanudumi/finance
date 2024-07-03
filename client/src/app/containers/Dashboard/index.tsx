@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInjectReducer, useInjectSaga } from 'redux-injectors';
-import { reducer, sliceKey } from './slice';
+import { dashboardActions, reducer, sliceKey } from './slice';
 import { dashboardSaga } from './saga';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../App/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFocus, selectLoading, selectUser } from '../App/selectors';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import {
   CCol,
+  CDatePicker,
   CDropdown,
   CDropdownItem,
   CDropdownMenu,
@@ -19,18 +20,116 @@ import {
 } from '@coreui/react-pro';
 import CIcon from '@coreui/icons-react';
 import { cilArrowBottom, cilArrowTop, cilOptions, cilPencil, cilTrash } from '@coreui/icons';
-import { CBadge, CButton, CCardBody, CCollapse, CNav, CNavItem, CNavLink } from '@coreui/react';
+import {
+  CBadge,
+  CButton,
+  CCardBody,
+  CCollapse,
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CFormTextarea,
+  CModal,
+  CModalBody,
+  CModalHeader,
+  CModalTitle,
+  CNav,
+  CNavItem,
+  CNavLink,
+} from '@coreui/react';
+import { selectPeriod, selectTotalTransactionsCount, selectTransactions } from './selectors';
+import { use } from 'i18next';
+import { useMutation } from '@apollo/client';
+import { DELETE_TRANSACTIONS_QUERY } from '../../graphql-queries/transactions';
+import { appActions } from '../App/slice';
+import notificationBuilder from '../../../utils/notificationBuilder';
+import { Form } from 'react-hook-form';
+import { Transaction } from './types';
 
 export default function Dashboard() {
   useInjectReducer({ key: sliceKey, reducer: reducer });
   useInjectSaga({ key: sliceKey, saga: dashboardSaga });
   const { t } = useTranslation();
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const focus = useSelector(selectLoading);
+  const transactions = useSelector(selectTransactions);
+  const transactionsCount = useSelector(selectTotalTransactionsCount);
+  const period = useSelector(selectPeriod);
+
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [remainingBalance, setRemainingBalance] = useState(0);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editTransaction, setEditTransaction] = useState(null as unknown as Transaction);
+
+  const [activetab, setActiveTab] = useState(0);
+
+  const [deleteTransactions] = useMutation(DELETE_TRANSACTIONS_QUERY);
+
+  const onDelete = async id => {
+    dispatch(appActions.startFormSubmitting());
+    const variables = {
+      id: id,
+    };
+    const response = await deleteTransactions({ variables });
+    console.log('test id', id, response);
+    if (!response['data']) {
+      dispatch(appActions.addNotification(notificationBuilder('danger', 'Error Delete transaction', 'Error')));
+    } else {
+      dispatch(appActions.addNotification(notificationBuilder('success', 'Transaction have been deleted', 'Success')));
+    }
+    dispatch(dashboardActions.getTransactions());
+    dispatch(appActions.stopFormSubmitting());
+  };
+
+  useEffect(() => {
+    dispatch(dashboardActions.getTransactions());
+  }, [period]);
+
+  useEffect(() => {
+    setTotalIncome(
+      transactions.reduce(function (acc, current) {
+        if (current.type === 'income') {
+          return acc + current.amount;
+        } else {
+          return acc;
+        }
+      }, 0),
+    );
+
+    setTotalExpenses(
+      transactions.reduce(function (acc, current) {
+        if (current.type === 'expense') {
+          return acc + current.amount;
+        } else {
+          return acc;
+        }
+      }, 0),
+    );
+  }, [dispatch, transactions]);
+
+  useEffect(() => {
+    setRemainingBalance(totalIncome - totalExpenses);
+  }, [totalExpenses, totalIncome]);
+
+  useEffect(() => {
+    dispatch(dashboardActions.getTransactions());
+  }, [dispatch]);
 
   const [details, setDetails] = useState([]);
   const columns = [
     {
       key: 'date',
+      filter: false,
+      sorter: false,
+    },
+    {
+      key: 'recursive',
+      label: 'Recursive',
       filter: false,
       sorter: false,
     },
@@ -61,218 +160,7 @@ export default function Dashboard() {
       sorter: false,
     },
   ];
-  const usersData = [
-    {
-      id: 1,
-      date: '2024-04-15',
-      type: 'income',
-      amount: 242.07,
-      category: 'stocks',
-    },
-    {
-      id: 2,
-      date: '2023-08-14',
-      type: 'income',
-      amount: 274.53,
-      category: 'freelance',
-    },
-    {
-      id: 3,
-      date: '2024-05-16',
-      type: 'expense',
-      amount: 397.12,
-      category: 'entertainment',
-    },
-    {
-      id: 4,
-      date: '2024-04-24',
-      type: 'income',
-      amount: 944.02,
-      category: 'freelance',
-    },
-    {
-      id: 5,
-      date: '2024-02-13',
-      type: 'expense',
-      amount: 454.58,
-      category: 'meal',
-    },
-    {
-      id: 6,
-      date: '2023-08-16',
-      type: 'expense',
-      amount: 883.34,
-      category: 'meal',
-    },
-    {
-      id: 7,
-      date: '2023-10-02',
-      type: 'income',
-      amount: 202.93,
-      category: 'etf',
-    },
-    {
-      id: 8,
-      date: '2023-12-01',
-      type: 'income',
-      amount: 824.15,
-      category: 'salary',
-    },
-    {
-      id: 9,
-      date: '2024-05-24',
-      type: 'income',
-      amount: 593.53,
-      category: 'stocks',
-    },
-    {
-      id: 10,
-      date: '2024-01-20',
-      type: 'expense',
-      amount: 100.57,
-      category: 'entertainment',
-    },
-    {
-      id: 11,
-      date: '2024-04-18',
-      type: 'income',
-      amount: 981.9,
-      category: 'salary',
-    },
-    {
-      id: 12,
-      date: '2024-03-02',
-      type: 'expense',
-      amount: 280.41,
-      category: 'rent',
-    },
-    {
-      id: 13,
-      date: '2023-09-15',
-      type: 'expense',
-      amount: 382.32,
-      category: 'entertainment',
-    },
-    {
-      id: 14,
-      date: '2024-02-18',
-      type: 'income',
-      amount: 939.51,
-      category: 'salary',
-    },
-    {
-      id: 15,
-      date: '2024-03-26',
-      type: 'expense',
-      amount: 579.26,
-      category: 'distraction',
-    },
-    {
-      id: 16,
-      date: '2023-12-06',
-      type: 'expense',
-      amount: 375.62,
-      category: 'transport',
-    },
-    {
-      id: 17,
-      date: '2024-01-11',
-      type: 'expense',
-      amount: 604.22,
-      category: 'bills',
-    },
-    {
-      id: 18,
-      date: '2023-08-18',
-      type: 'income',
-      amount: 503.95,
-      category: 'freelance',
-    },
-    {
-      id: 19,
-      date: '2023-06-22',
-      type: 'expense',
-      amount: 632.17,
-      category: 'meal',
-    },
-    {
-      id: 20,
-      date: '2023-07-28',
-      type: 'income',
-      amount: 180.74,
-      category: 'etf',
-    },
-    {
-      id: 21,
-      date: '2023-06-24',
-      type: 'income',
-      amount: 652.11,
-      category: 'salary',
-    },
-    {
-      id: 22,
-      date: '2024-01-01',
-      type: 'income',
-      amount: 845.33,
-      category: 'freelance',
-    },
-    {
-      id: 23,
-      date: '2023-10-21',
-      type: 'expense',
-      amount: 600.49,
-      category: 'distraction',
-    },
-    {
-      id: 24,
-      date: '2023-08-15',
-      type: 'expense',
-      amount: 402.66,
-      category: 'bills',
-    },
-    {
-      id: 25,
-      date: '2023-06-22',
-      type: 'expense',
-      amount: 336.34,
-      category: 'meal',
-    },
-    {
-      id: 26,
-      date: '2024-01-10',
-      type: 'income',
-      amount: 90.99,
-      category: 'freelance',
-    },
-    {
-      id: 27,
-      date: '2023-08-27',
-      type: 'income',
-      amount: 479.28,
-      category: 'stocks',
-    },
-    {
-      id: 28,
-      date: '2024-03-29',
-      type: 'income',
-      amount: 728.65,
-      category: 'salary',
-    },
-    {
-      id: 29,
-      date: '2023-07-02',
-      type: 'expense',
-      amount: 333.27,
-      category: 'transport',
-    },
-    {
-      id: 30,
-      date: '2024-02-19',
-      type: 'income',
-      amount: 236.2,
-      category: 'etf',
-    },
-  ];
+
   const getBadge = status => {
     switch (status) {
       case 'Active':
@@ -300,11 +188,140 @@ export default function Dashboard() {
     setDetails(newDetails);
   };
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <>
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
+      <CModal visible={showAddModal} onClose={() => setShowAddModal(false)}>
+        <CModalHeader closeButton>
+          <CModalTitle>Add transactions</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CForm
+            onSubmit={event => {
+              event.preventDefault();
+              console.log('test event', event);
+            }}
+          >
+            <CFormInput type="number" id="amount" label="Amount" defaultValue={0} />
+            <CFormLabel className="mt-2">Type</CFormLabel>
+            <CFormSelect
+              aria-label="Type"
+              options={[
+                { label: 'Income', value: 'income' },
+                { label: 'Expense', value: 'expense' },
+              ]}
+            />
+            <CFormLabel className="mt-2">Date</CFormLabel>
+            <CDatePicker date="2023/7/03" label="Date" locale="en-US" />
+            <CFormLabel className="mt-2">Category</CFormLabel>
+            <CFormSelect
+              aria-label="Category"
+              options={[
+                { label: 'Meal', value: 'Meal' },
+                { label: 'Distraction', value: 'Distraction' },
+                { label: 'Transport', value: 'Transport' },
+                { label: 'Bills', value: 'Bills' },
+                { label: 'Shopping', value: 'Shopping' },
+                { label: 'Healthcare', value: 'Healthcare' },
+                { label: 'Education', value: 'Education' },
+                { label: 'Travel', value: 'Travel' },
+                { label: 'Entertainment', value: 'Entertainment' },
+                { label: 'Utilities', value: 'Utilities' },
+                { label: 'Insurance', value: 'Insurance' },
+                { label: 'Rent', value: 'Rent' },
+                { label: 'Stocks ', value: 'Stocks' },
+                { label: 'ETF ', value: 'ETF' },
+                { label: 'Dividends ', value: 'Dividends ' },
+                { label: 'Salary ', value: 'Salary ' },
+                { label: 'Rental Income', value: 'Rental Income' },
+              ]}
+            />
+            <CFormTextarea
+              id="exampleFormControlTextarea1"
+              label="Description"
+              rows={2}
+              className="mt-2"
+            ></CFormTextarea>
+            <CButton type="submit" color="primary" className="mt-3">
+              Submit
+            </CButton>
+          </CForm>
+        </CModalBody>
+      </CModal>
+
+      <CModal visible={showEditModal} onClose={() => setShowEditModal(false)}>
+        <CModalHeader closeButton>
+          <CModalTitle>Edit transactions</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CForm
+            onSubmit={event => {
+              event.preventDefault();
+            }}
+          >
+            <CFormInput
+              type="number"
+              id="amount"
+              label="Amount"
+              defaultValue={editTransaction && editTransaction.amount ? editTransaction.amount : 0}
+            />
+            <CFormLabel className="mt-2">Type</CFormLabel>
+            <CFormSelect
+              aria-label="Type"
+              value={editTransaction && editTransaction.type ? editTransaction.type : ''}
+              options={[
+                { label: 'Income', value: 'income' },
+                { label: 'Expense', value: 'expense' },
+              ]}
+            />
+            <CFormLabel className="mt-2">Date</CFormLabel>
+            <CDatePicker
+              /*@ts-ignore*/
+              date="2023/7/03"
+              label="Date"
+              locale="en-US"
+            />
+            <CFormLabel className="mt-2">Category</CFormLabel>
+            <CFormSelect
+              aria-label="Category"
+              value={editTransaction && editTransaction.category.name ? editTransaction.category.name : ''}
+              options={[
+                { label: 'Meal', value: 'Meal' },
+                { label: 'Distraction', value: 'Distraction' },
+                { label: 'Transport', value: 'Transport' },
+                { label: 'Bills', value: 'Bills' },
+                { label: 'Shopping', value: 'Shopping' },
+                { label: 'Healthcare', value: 'Healthcare' },
+                { label: 'Education', value: 'Education' },
+                { label: 'Travel', value: 'Travel' },
+                { label: 'Entertainment', value: 'Entertainment' },
+                { label: 'Utilities', value: 'Utilities' },
+                { label: 'Insurance', value: 'Insurance' },
+                { label: 'Rent', value: 'Rent' },
+                { label: 'Stocks', value: 'Stocks' },
+                { label: 'ETF', value: 'ETF ' },
+                { label: 'Dividends ', value: 'Dividends ' },
+                { label: 'Salary', value: 'Salary ' },
+                { label: 'Rental Income', value: 'Rental Income' },
+              ]}
+            />
+            <CFormTextarea
+              id="exampleFormControlTextarea1"
+              label="Description"
+              value={editTransaction && editTransaction.description ? editTransaction.description : ''}
+              rows={2}
+              className="mt-2"
+            ></CFormTextarea>
+            <CButton type="submit" color="primary" className="mt-3">
+              Submit
+            </CButton>
+          </CForm>
+        </CModalBody>
+      </CModal>
       <CRow>
         <CCol sm={4}>
           <CWidgetStatsA
@@ -314,12 +331,22 @@ export default function Dashboard() {
               <div className="mb-4">
                 <h1>Total Income</h1>
                 <span className="mb-4">
-                  +$9.000{' '}
+                  +${totalIncome ? totalIncome : 0}{' '}
                   <span className="fs-6 fw-normal">
-                    (40.9% <CIcon icon={cilArrowTop} />)
+                    <CIcon icon={cilArrowTop} />
                   </span>
                 </span>
-                <div className="fs-6 fw-light text-light">in 13 transactions</div>
+                <div className="fs-6 fw-light text-light">
+                  in{' '}
+                  {transactions.reduce(function (ac, current) {
+                    if (current.type === 'income') {
+                      return ac + 1;
+                    } else {
+                      return ac;
+                    }
+                  }, 0)}{' '}
+                  transactions
+                </div>
               </div>
             }
             action={
@@ -328,8 +355,7 @@ export default function Dashboard() {
                   <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
                 </CDropdownToggle>
                 <CDropdownMenu>
-                  <CDropdownItem>Show transactions</CDropdownItem>
-                  <CDropdownItem>Add Income</CDropdownItem>
+                  <CDropdownItem onClick={() => setShowAddModal(true)}>Add transaction</CDropdownItem>
                   <CDropdownItem>Edit</CDropdownItem>
                 </CDropdownMenu>
               </CDropdown>
@@ -344,12 +370,22 @@ export default function Dashboard() {
               <div className="mb-4">
                 <h1>Total Expenses</h1>
                 <span className="mb-4">
-                  -$5.688{' '}
+                  -${totalExpenses}{' '}
                   <span className="fs-6 fw-normal">
-                    (63.2% <CIcon icon={cilArrowBottom} />)
+                    <CIcon icon={cilArrowBottom} />
                   </span>
                 </span>
-                <div className="fs-6 fw-light text-light">in 67 transactions</div>
+                <div className="fs-6 fw-light text-light">
+                  in{' '}
+                  {transactions.reduce(function (ac, current) {
+                    if (current.type === 'expense') {
+                      return ac + 1;
+                    } else {
+                      return ac;
+                    }
+                  }, 0)}{' '}
+                  transactions
+                </div>
               </div>
             }
             action={
@@ -358,8 +394,7 @@ export default function Dashboard() {
                   <CIcon icon={cilOptions} className="text-high-emphasis-inverse" />
                 </CDropdownToggle>
                 <CDropdownMenu>
-                  <CDropdownItem>Show transactions</CDropdownItem>
-                  <CDropdownItem>Add Income</CDropdownItem>
+                  <CDropdownItem>Add transactions</CDropdownItem>
                   <CDropdownItem>Edit</CDropdownItem>
                 </CDropdownMenu>
               </CDropdown>
@@ -374,9 +409,10 @@ export default function Dashboard() {
               <div className="mb-4">
                 <h1>Remaining Balance</h1>
                 <span className="mb-4">
-                  $3312 <span className="fs-6 fw-normal">(36.8%)</span>
+                  {remainingBalance < 0 ? '-' : ''}${remainingBalance ? remainingBalance : 0}{' '}
+                  <span className="fs-6 fw-normal"></span>
                 </span>
-                <div className="fs-6 fw-light text-light">7 days</div>
+                <div className="fs-6 fw-light text-light">28 days</div>
               </div>
             }
           />
@@ -384,34 +420,94 @@ export default function Dashboard() {
       </CRow>
       <CNav variant="pills" layout="fill" color="secondary" className="mb-3">
         <CNavItem>
-          <CNavLink href="#" active>
+          <CNavLink
+            href="#"
+            active={activetab === 0}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-07-01', endDate: '2024-07-31' }));
+              setActiveTab(0);
+            }}
+          >
+            July
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink
+            href="#"
+            active={activetab === 1}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-06-01', endDate: '2024-06-30' }));
+              setActiveTab(1);
+            }}
+          >
             June
           </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">July</CNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CNavLink href="#">August</CNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CNavLink href="#" disabled>
-            September
+          <CNavLink
+            href="#"
+            active={activetab === 2}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-05-01', endDate: '2024-05-31' }));
+              setActiveTab(2);
+            }}
+          >
+            May
           </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#" disabled>
-            October
+          <CNavLink
+            href="#"
+            active={activetab === 3}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-04-01', endDate: '2024-04-30' }));
+              setActiveTab(3);
+            }}
+          >
+            April
           </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#" disabled>
-            November
+          <CNavLink
+            href="#"
+            active={activetab === 4}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-03-01', endDate: '2024-03-31' }));
+              setActiveTab(4);
+            }}
+          >
+            March
           </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#" disabled>
-            December
+          <CNavLink
+            href="#"
+            active={activetab === 5}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-02-01', endDate: '2024-02-30' }));
+              setActiveTab(5);
+            }}
+          >
+            February
+          </CNavLink>
+        </CNavItem>
+        <CNavItem>
+          <CNavLink
+            href="#"
+            active={activetab === 6}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(dashboardActions.setPeriod({ startDate: '2024-01-01', endDate: '2024-01-31' }));
+              setActiveTab(6);
+            }}
+          >
+            January
           </CNavLink>
         </CNavItem>
       </CNav>
@@ -424,9 +520,9 @@ export default function Dashboard() {
           columnFilter
           columnSorter
           footer
-          items={usersData}
+          items={transactions}
           itemsPerPageSelect
-          itemsPerPage={5}
+          itemsPerPage={20}
           pagination
           onFilteredItemsChange={items => {
             console.log(items);
@@ -449,7 +545,8 @@ export default function Dashboard() {
                 </CBadge>
               </td>
             ),
-            category: item => <td>{item.category.charAt(0).toUpperCase() + item.category.slice(1)}</td>,
+            category: item => <td>{item.category.name.charAt(0).toUpperCase() + item.category.name.slice(1)}</td>,
+            recursive: item => <td>{item.recursive ? 'Yes' : 'No'}</td>,
             date: item => {
               const date = new Date(Date.parse(item.date));
               return <td>{date.toDateString()}</td>;
@@ -460,9 +557,22 @@ export default function Dashboard() {
                 <td className="py-2">
                   <div className="d-flex justify-content-center align-content-center ">
                     <CButton className="d-flex justify-content-center align-items-center me-2" color="success">
-                      <CIcon icon={cilPencil} className="text-light"></CIcon>
+                      <CIcon
+                        icon={cilPencil}
+                        className="text-light"
+                        onClick={() => {
+                          setShowEditModal(true);
+                          setEditTransaction(item);
+                        }}
+                      ></CIcon>
                     </CButton>
-                    <CButton className="d-flex justify-content-center align-items-center" color="danger">
+                    <CButton
+                      className="d-flex justify-content-center align-items-center"
+                      color="danger"
+                      onClick={event => {
+                        onDelete(item.id);
+                      }}
+                    >
                       <CIcon icon={cilTrash} className="text-light"></CIcon>
                     </CButton>
                   </div>

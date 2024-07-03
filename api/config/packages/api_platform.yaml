@@ -4,6 +4,7 @@ api_platform:
     version: 1.0.0
     # Good cache defaults for REST APIs
     defaults:
+        pagination_items_per_page: 150
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']

@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { dashboardActions } from './slice';
+import { summaryActions } from './slice';
 import queryRequest from '../../../utils/apollo/queryRequest';
 import { TRANSACTIONS_OVERVIEW_QUERY } from '../../graphql-queries/transactions';
 import * as selectors from './selectors';
@@ -11,12 +11,12 @@ export function* getData() {
       before: period.endDate,
       after: period.startDate,
     });
-    yield put(dashboardActions.setTransactions(data));
+    yield put(summaryActions.setTransactions(data));
   } catch (error: any) {
     console.log(error['message']);
   }
 }
 
-export function* dashboardSaga() {
-  yield takeLatest(dashboardActions.getTransactions.type, getData);
+export function* summarySaga() {
+  yield takeLatest(summaryActions.getTransactions.type, getData);
 }

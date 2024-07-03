@@ -3,19 +3,15 @@ import { ContainerState, Period, Transaction, TransactionsResponse } from './typ
 
 // The initial state of the Tasks container
 export const initialState: ContainerState = {
-  selectedCustomer: false,
   transactions: [],
+  period: { startDate: '2023-07-04', endDate: '2024-07-31' },
   totalTransactionsCount: null,
-  period: { startDate: '2024-07-01', endDate: '2024-07-31' },
 };
 
-const dashboardSlice = createSlice({
-  name: 'dashboard',
+const summarySlice = createSlice({
+  name: 'summary',
   initialState,
   reducers: {
-    setPeriod(state, action: PayloadAction<Period>) {
-      state.period = action.payload;
-    },
     getTransactions() {},
     setTransactions(state, action: PayloadAction<TransactionsResponse>) {
       let data = [] as Transaction[];
@@ -25,10 +21,7 @@ const dashboardSlice = createSlice({
       state.transactions = data;
       state.totalTransactionsCount = action.payload.data.transactions.totalCount;
     },
-    setSelectedUser(state, action: PayloadAction<boolean>) {
-      state.selectedCustomer = action.payload;
-    },
   },
 });
 
-export const { actions: dashboardActions, reducer, name: sliceKey } = dashboardSlice;
+export const { actions: summaryActions, reducer, name: sliceKey } = summarySlice;

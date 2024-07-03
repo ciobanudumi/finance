@@ -1,0 +1,5 @@
+App\Entity\SubCategory:
+  properties:
+    id:
+      identifier: true
+  

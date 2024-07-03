@@ -1,0 +1,12 @@
+App\Entity\Category:
+  attributes:
+    id:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions' ]
+    name:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions' ]
+    type:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    transactions:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    subcategory:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]

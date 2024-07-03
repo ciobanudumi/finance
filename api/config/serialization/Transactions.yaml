@@ -1,0 +1,20 @@
+App\Entity\Transactions:
+  attributes:
+    id:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions' ]
+    user:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions' ]
+    date:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    type:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    amount:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    description:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    recursive:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    recursiveTransactions:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]
+    category:
+      groups: [ 'user', 'category', 'subCategory', 'transactions', 'recursiveTransactions'  ]

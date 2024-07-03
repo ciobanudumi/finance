@@ -7,6 +7,7 @@ import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { Login } from './containers/Security/Login/Loadable';
 import ProtectedRoute from './components/ProtectedRoute';
 import { SetPassword } from './containers/Security/SetPassword/Loadable';
+import { Summary } from './containers/Summary/Loadable';
 
 export const publicRoutes = [
   {
@@ -27,6 +28,12 @@ export const privateRoutes = (): AppRoutes[] => [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
+    routes: null,
+  },
+  {
+    path: '/summary',
+    name: 'summary',
+    component: Summary,
     routes: null,
   },
   {

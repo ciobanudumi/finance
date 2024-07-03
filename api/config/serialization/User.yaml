@@ -1,9 +1,9 @@
 App\Entity\User:
   attributes:
     id:
-      groups: [ 'user', 'taskSet']
+      groups: [ 'user']
     name:
-      groups: [ 'user', 'taskSet', 'task']
+      groups: [ 'user']
     username:
       groups: [ 'user' ]
     email:

@@ -23,3 +23,19 @@ services:
     autowire: false
     autoconfigure: false
     public: false
+
+  date_transaction_filter:
+    parent: 'api_platform.doctrine.orm.date_filter'
+    arguments: [ { date: ~ } ]
+    tags: [ 'api_platform.filter' ]
+    autowire: false
+    autoconfigure: false
+    public: false
+
+  date_transaction_order_filter:
+    parent: 'api_platform.doctrine.orm.order_filter'
+    arguments: [ { date: ~ } ]
+    tags: [ 'api_platform.filter' ]
+    autowire: false
+    autoconfigure: false
+    public: false
